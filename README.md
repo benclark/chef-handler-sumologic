@@ -19,7 +19,7 @@ Attributes
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['chef-handler-sumologic']['endpoint']</tt></td>
+    <td><tt>["sumologic"]["endpoint"]</tt></td>
     <td>URL</td>
     <td>SumoLogic HTTP Endpoint to receive reports and exceptions</td>
     <td><tt>true</tt></td>

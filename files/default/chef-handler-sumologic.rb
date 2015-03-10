@@ -28,7 +28,7 @@ class Chef
 			def report_metrics(status)
 				Chef::Log.info("SumoLogic Report Handler: good")
 				Chef::Log.info("Writing to: "+@collector_endpoint)
-				run_data = { :host => node.fqdn, :ip_address => node.ipaddress, :start_time => run_status.start_time, :end_time => run_status.end_time, :elapsed_time => run_status.elapsed_time, :updated_resources => run_status.updated_resources.join(":") }
+				run_data = { :host => node.fqdn, :ip_address => node.ipaddress, :start_time => run_status.start_time, :end_time => run_status.end_time, :elapsed_time => run_status.elapsed_time, :updated_resources => run_status.updated_resources.join("\t") }
 				payload = run_data.collect{|k,v| [k,v].join('=')}.join('&')
 				if status==true 
 					prefix = "Chef-Client completed successfully : "
