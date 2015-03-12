@@ -31,6 +31,7 @@ Usage
 #### chef-handler-sumologic::default
 1. Create an HTTP source on your SumoLogic account (https://service.sumologic.com)
 2. Set the attribute default['sumologic']['endpoint'] with the URL of this HTTP source.
+NOTE: if you want to save the report and exceptions to the local chef-client log, use the value "local".
 3. Include `chef-handler-sumologic` first in your node's `run_list`:
 
 ```json
