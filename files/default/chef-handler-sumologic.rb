@@ -34,7 +34,8 @@ class Chef
 					# write to the local Chef-Log channel
 					Chef::Log.info("SumoLogic Report Handler Report: ")
 				end
-				run_data = { :host => node.fqdn, :ip_address => node.ipaddress, :start_time => run_status.start_time, :end_time => run_status.end_time, :elapsed_time => run_status.elapsed_time, :updated_resources => run_status.updated_resources.join("\t") }
+				@node_name = node.key?(:fqdn) ? node.fqdn : "undefined"
+				run_data = { :host => @node_name, :ip_address => node.ipaddress, :start_time => run_status.start_time, :end_time => run_status.end_time, :elapsed_time => run_status.elapsed_time, :updated_resources => run_status.updated_resources.join("\t") }
 				payload = run_data.collect{|k,v| [k,v].join('=')}.join('&')
 				if status==true 
 					prefix = "Chef-Client completed successfully : "
@@ -54,7 +55,8 @@ class Chef
 				Chef::Log.warn("SumoLogic Exception Handler: ")
 				payload = Array(run_status.backtrace).join("%0D%0A")
 				#final_payload = URI.escape("Exception: "+payload)
-				run_data = { :host => node.fqdn,:ip_address => node.ipaddress, :start_time => run_status.start_time, :end_time => run_status.end_time, :elapsed_time => run_status.elapsed_time}.collect{|k,v| [k,v].join('=')}.join('&')
+				@node_name = node.key?(:fqdn) ? node.fqdn : "undefined"
+				run_data = { :host => @node_name,:ip_address => node.ipaddress, :start_time => run_status.start_time, :end_time => run_status.end_time, :elapsed_time => run_status.elapsed_time}.collect{|k,v| [k,v].join('=')}.join('&')
 				final_payload = "Exception(s) on "+run_data+". Full list: "+payload
 				if @collector_endpoint !=@isLogLocally
 					sendMsg(final_payload)

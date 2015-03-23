@@ -19,6 +19,10 @@
 #
 include_recipe 'chef_handler'
 
+gem_package "rest-client" do
+	action :install
+end
+
 cookbook_file "#{Chef::Config[:file_cache_path]}/chef-handler-sumologic.rb" do
 	source 'chef-handler-sumologic.rb'
 	mode 0600
