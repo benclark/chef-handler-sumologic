@@ -2,7 +2,7 @@
 # Cookbook Name:: chef-handler-sumologic
 # Recipe:: default
 #
-# Copyright 2015, SumoLogic Inc. 
+# Copyright 2015, SumoLogic Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,13 +19,18 @@
 #
 include_recipe 'chef_handler'
 
+gem_package 'rest-client' do
+  gem_binary '/opt/chef/embedded/bin/gem'
+  action :install
+end
+
 cookbook_file "#{Chef::Config[:file_cache_path]}/chef-handler-sumologic.rb" do
-	source 'chef-handler-sumologic.rb'
-	mode 0600
+  source 'chef-handler-sumologic.rb'
+  mode 0600
 end.run_action(:create)
 
-chef_handler "Chef::Handler::SumoLogic" do
-	source "#{Chef::Config[:file_cache_path]}/chef-handler-sumologic.rb"
-	arguments [node[:sumologic][:endpoint]]
-	action :enable
+chef_handler 'Chef::Handler::SumoLogic' do
+  source "#{Chef::Config[:file_cache_path]}/chef-handler-sumologic.rb"
+  arguments [node[:sumologic][:endpoint]]
+  action :enable
 end
