@@ -20,7 +20,7 @@
 include_recipe 'chef_handler'
 
 gem_package 'rest-client' do
-  gem_binary '/opt/chef/embedded/bin/gem'
+  gem_binary Chef::Util::PathHelper.join(Chef::Config.embedded_dir,'bin','gem')
   action :install
 end
 
